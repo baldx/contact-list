@@ -20,3 +20,9 @@ form {
 form > label {
     margin: 1em;
 }
+
+#sorting {
+    font-size: 1em;
+    padding: 8px;
+    width: 250px;
+}
