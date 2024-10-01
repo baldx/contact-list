@@ -4,6 +4,9 @@ let birthDateInput = document.querySelector('#birthdate');
 const submitBtn = document.querySelector('#submit');
 let main = document.querySelector('main');
 
+let contactList = [
+
+]
 
 function calculateAge (birthdate) {
     const today = new Date();
@@ -55,6 +58,14 @@ submitBtn.addEventListener('click', function(e) {
 
     const daysTillBirthday = document.createElement('div');
     daysTillBirthday.textContent = `Days until birthday: ${calculateDaysTillBirthday(birthDateInput.value)}`;
+
+    contactList.push({
+        firstName: firstNameInput.value,
+        lastName: lastNameInput.value,
+        birthDate: birthDateInput.value,
+        age: calculateAge(birthDateInput.value),
+        daysTillBirthday: calculateDaysTillBirthday(birthDateInput.value)
+    });    
 
     card.appendChild(firstName);
     card.appendChild(lastName);
