@@ -3,6 +3,7 @@ let lastNameInput = document.querySelector('#lastName');
 let birthDateInput = document.querySelector('#birthdate');
 const submitBtn = document.querySelector('#submit');
 let main = document.querySelector('main');
+let sortingBtn = document.querySelector('#sorting');
 
 let contactList = [
 
@@ -65,7 +66,45 @@ submitBtn.addEventListener('click', function(e) {
         birthDate: birthDateInput.value,
         age: calculateAge(birthDateInput.value),
         daysTillBirthday: calculateDaysTillBirthday(birthDateInput.value)
-    });    
+    });
+    
+    visual();
+
+    firstNameInput.value = '';
+    lastNameInput.value = '';
+    birthDateInput.value = '';
+});
+
+function visual () {
+    const cards = document.querySelectorAll('.user-card');
+    cards.forEach(card => main.removeChild(card))    
+    
+    for (let i = 0; i < contactList.length; i++) {
+        createContact(contactList[i]);
+        console.log("asdasd");
+
+    }
+}
+
+function createContact (item) {
+
+    const card = document.createElement('div');
+    card.classList.add('user-card');
+
+    const firstName = document.createElement('div');
+    firstName.textContent = `First Name: ${item.firstName}`;
+
+    const lastName = document.createElement('div');
+    lastName.textContent = `Last Name: ${item.lastName}`;
+
+    const birthDate = document.createElement('div');
+    birthDate.textContent = `Birthday: ${item.birthDate}`;
+
+    const ageDiv = document.createElement('div');
+    ageDiv.textContent = `Age: ${item.age}`
+
+    const daysTillBirthday = document.createElement('div');
+    daysTillBirthday.textContent = `Days until birthday: ${item.daysTillBirthday}`;
 
     card.appendChild(firstName);
     card.appendChild(lastName);
@@ -74,8 +113,21 @@ submitBtn.addEventListener('click', function(e) {
     card.appendChild(daysTillBirthday);
 
     main.appendChild(card);
+}
 
-    firstNameInput.value = '';
-    lastNameInput.value = '';
-    birthDateInput.value = '';
+sortingBtn.addEventListener('click', function(e) {
+    if (sortingBtn.className === 'creation') {
+        sortingBtn.className = 'age';
+        sortingBtn.innerHTML = 'Sorted by age'
+    } else if (sortingBtn.className === 'age') {
+        sortingBtn.className = 'name';
+        sortingBtn.innerHTML = 'Sorted by name'
+    } else if (sortingBtn.className === 'name') {
+        sortingBtn.className = 'days-until';
+        sortingBtn.innerHTML = 'Sorted by days until birthday'
+    } else if (sortingBtn.className === 'days-until') {
+        sortingBtn.className = 'creation';
+        sortingBtn.innerHTML = 'Sorted by contact creation'
+    }
+    
 });
