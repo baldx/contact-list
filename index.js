@@ -68,21 +68,23 @@ submitBtn.addEventListener('click', function(e) {
         daysTillBirthday: calculateDaysTillBirthday(birthDateInput.value)
     });
     
-    visual();
+    visual(contactList);
+    formValidation();
 
+});
+
+function formValidation () {
     firstNameInput.value = '';
     lastNameInput.value = '';
     birthDateInput.value = '';
-});
+}
 
-function visual () {
+function visual (list) {
     const cards = document.querySelectorAll('.user-card');
     cards.forEach(card => main.removeChild(card))    
     
-    for (let i = 0; i < contactList.length; i++) {
-        createContact(contactList[i]);
-        console.log("asdasd");
-
+    for (let i = 0; i < list.length; i++) {
+        createContact(list[i]);
     }
 }
 
@@ -116,18 +118,45 @@ function createContact (item) {
 }
 
 sortingBtn.addEventListener('click', function(e) {
+
     if (sortingBtn.className === 'creation') {
         sortingBtn.className = 'age';
         sortingBtn.innerHTML = 'Sorted by age'
+
+        visual(contactList.sort((age1, age2) => {
+
+            if (age1.age < age2.age) return 1;
+            else if (age1.age > age2.age) return -1;
+            else return 0;
+
+        })); //sorts age, from highest to lowest
+
     } else if (sortingBtn.className === 'age') {
         sortingBtn.className = 'name';
-        sortingBtn.innerHTML = 'Sorted by name'
+        sortingBtn.innerHTML = 'Sorted by name';
+
+        visual(contactList.sort((name1, name2) => {
+            
+            if (name1.firstName > name2.firstName) return 1;
+            else if (name1.firstName < name2.firstName) return -1;
+            else return 0;
+
+        })); //sorts name, from a to z
+
     } else if (sortingBtn.className === 'name') {
         sortingBtn.className = 'days-until';
         sortingBtn.innerHTML = 'Sorted by days until birthday'
+        
+        visual(contactList.sort((date1, date2) => {
+
+            if (date1.daysTillBirthday > date2.daysTillBirthday) return 1;
+            else if (date1.daysTillBirthday < date2.daysTillBirthday) return -1;
+            else return 0;
+
+        })); // sorts from lowest to highest
+
     } else if (sortingBtn.className === 'days-until') {
         sortingBtn.className = 'creation';
         sortingBtn.innerHTML = 'Sorted by contact creation'
     }
-    
 });
