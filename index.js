@@ -108,13 +108,24 @@ function createContact (item) {
     const daysTillBirthday = document.createElement('div');
     daysTillBirthday.textContent = `Days until birthday: ${item.daysTillBirthday}`;
 
+    const removeBtn = document.createElement('button');
+    removeBtn.classList.add('remove');
+    removeBtn.innerHTML = 'Remove contact'
+
     card.appendChild(firstName);
     card.appendChild(lastName);
     card.appendChild(birthDate);
     card.appendChild(ageDiv);
     card.appendChild(daysTillBirthday);
+    card.appendChild(removeBtn);
 
     main.appendChild(card);
+
+
+    removeBtn.addEventListener('click', function(e) {
+        contactList.splice(contactList.indexOf(item), 1); //replaces 1 element of the index of the item with nothing
+        visual(contactList); //update the list after removing
+    });
 }
 
 sortingBtn.addEventListener('click', function(e) {
@@ -146,7 +157,7 @@ sortingBtn.addEventListener('click', function(e) {
     } else if (sortingBtn.className === 'name') {
         sortingBtn.className = 'days-until';
         sortingBtn.innerHTML = 'Sorted by days until birthday'
-        
+
         visual(contactList.sort((date1, date2) => {
 
             if (date1.daysTillBirthday > date2.daysTillBirthday) return 1;
